@@ -9,6 +9,7 @@ import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import notesRouter from './routes/notesRoutes.js';
 import authRouter from './routes/authRoutes.js';
+import userRouter from './routes/userRoutes.js';
 
 dotenv.config();
 
@@ -32,6 +33,7 @@ const startServer = async () => {
 
     // 3. Register routes
     app.use(authRouter);
+    app.use(userRouter);
     app.use(notesRouter);
 
     // 4. Celebrate Validation errors

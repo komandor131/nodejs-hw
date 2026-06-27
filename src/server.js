@@ -1,12 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
 import { errors } from 'celebrate';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import notesRouter from './routes/notesRoutes.js';
+import authRouter from './routes/authRoutes.js';
 
 dotenv.config();
 
@@ -19,10 +21,17 @@ const startServer = async () => {
 
     // 2. Middlewares
     app.use(logger);
-    app.use(cors());
+    app.use(
+      cors({
+        origin: true,
+        credentials: true,
+      }),
+    );
     app.use(express.json());
+    app.use(cookieParser());
 
     // 3. Register routes
+    app.use(authRouter);
     app.use(notesRouter);
 
     // 4. Celebrate Validation errors

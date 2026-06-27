@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { errors } from 'celebrate';
 import { connectMongoDB } from './db/connectMongoDB.js';
 import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
@@ -24,10 +25,13 @@ const startServer = async () => {
     // 3. Register routes
     app.use(notesRouter);
 
-    // 4. Not Found handler
+    // 4. Celebrate Validation errors
+    app.use(errors());
+
+    // 5. Not Found handler
     app.use(notFoundHandler);
 
-    // 5. Global Error handler
+    // 6. Global Error handler
     app.use(errorHandler);
 
     // 6. Start server

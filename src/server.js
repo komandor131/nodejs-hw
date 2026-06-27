@@ -36,11 +36,11 @@ const startServer = async () => {
     app.use(userRouter);
     app.use(notesRouter);
 
-    // 4. Celebrate Validation errors
-    app.use(errors());
-
-    // 5. Not Found handler
+    // 4. Not Found handler
     app.use(notFoundHandler);
+
+    // 5. Celebrate Validation errors
+    app.use(errors());
 
     // 6. Global Error handler
     app.use(errorHandler);
